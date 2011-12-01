@@ -102,8 +102,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	} else {
 		struct stat buf;
 		if (stat(ttyPath, &buf) == 0) {
-			ttyUID = malloc(11 * sizeof(char));
-			snprintf(ttyUID, 11 * sizeof(char), "%d", buf.st_uid);
+			asprintf(&ttyUID, "%d", buf.st_uid);
 		}
 	}
 
@@ -213,6 +212,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 
 
+	free(ttyUID);
 	/* Free the logString memory */
 	free(logString);
 	free(logMessage);
